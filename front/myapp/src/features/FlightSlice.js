@@ -14,6 +14,7 @@ const initialState = {
 
 const fetchFlights = createAsyncThunk('flight/getFlights', async (id = -1) => {
     const response = await axios.get(`${SURL}flight/${id}`,
+        localStorage.getItem('tokens') &&
         jwt_decode(localStorage.getItem("tokens")).exp * 1000 - Date.now() > 0 ? {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('tokens')}`
@@ -109,7 +110,6 @@ export const flightSlice = createSlice({
             state.loading = false
             state.value = []
             state.error = action.error.message
-            console.log(state.error)
         })
         // end
 

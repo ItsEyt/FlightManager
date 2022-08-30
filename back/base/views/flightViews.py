@@ -16,10 +16,8 @@ def flight(req, id=-1):
             return JsonResponse({"id does not exist":id})
     res = []
     for fly in Flight.objects.all():
-        print(req.user)
         if req.user.is_superuser or fly.is_active:
             res.append(FlightSerializer.FlightInfo(fly))
-    print(len(res))
     return JsonResponse(res,safe=False)
 
 @api_view(['GET'])
